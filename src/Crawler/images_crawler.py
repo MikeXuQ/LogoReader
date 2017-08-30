@@ -85,7 +85,7 @@ class ImagesCrawler(object):
         times_to_try = 5
         for i in range(times_to_try):
             try:
-                self.driver.get(self.url_base + self.word)
+                self.driver.get(self.url_base + self.word + ' logo')
                 return True
             except Exception, e:
                 print 'Fail to search "%s" due to exception: %s' % (self.word, e)
