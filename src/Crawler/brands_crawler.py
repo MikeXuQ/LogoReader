@@ -10,13 +10,12 @@ class BrandsCrawler(object):
         self.search_url_base = 'https://search.jd.com/Search?enc=utf-8&keyword='
 
     def get_brands(self, file_path):
-        # 注意需保证返回的字符为unicode编码
         brands = []
         if os.path.exists(file_path):
             print 'Getting brands from file...'
             with open(file_path, 'r') as f:
                 for line in f.readlines():
-                    brands.append(line.strip().decode('utf-8'))
+                    brands.append(line.strip())
         else:
             print 'Getting brands from pages...'
             categories = self._get_categories()
@@ -27,15 +26,14 @@ class BrandsCrawler(object):
                     try:
                         page = requests.get(self.search_url_base + category, timeout=5).content
                         html = etree.HTML(page)
-                        brands += [x for x in \
+                        brands += [x.encode('utf-8') for x in \
                             html.xpath('//div[contains(@class, \'s-brand\')]//ul[contains(@class, \'v-fixed\')]//a/@title')]
                     except Exception, e:
                         if i == times_to_try-1:
                             print 'Fail to get brands of "%s" due to %s' % (category, e)
             with open(file_path, 'w') as f:
                 for brand in brands:
-                    # 需将unicode转化为utf-8才可保存至文件
-                    f.write(brand.encode('utf-8') + '\n')
+                    f.write(brand + '\n')
 
         return brands
 

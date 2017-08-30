@@ -7,8 +7,8 @@ from multiprocessing import Pool, Value
 import os
 
 class ImagesCrawler(object):
-    def __init__(self, url_base, debug=False):
-        self.url_base = url_base
+    def __init__(self, debug=False):
+        self.url_base = "https://image.baidu.com/search/flip?tn=baiduimage&ie=utf-8&pn=0&gsm=50&ct=&ic=0&lm=-1&width=0&height=0&word="
         self.debug = debug
 
     def search(self, word, max_page_num, files_dir):
@@ -85,11 +85,7 @@ class ImagesCrawler(object):
         times_to_try = 5
         for i in range(times_to_try):
             try:
-                self.driver.get(self.url_base)
-                blank = self.driver.find_element_by_id('kw')
-                blank.clear()
-                blank.send_keys(self.word)
-                self.driver.find_element_by_css_selector('input.s_btn').click()
+                self.driver.get(self.url_base + self.word)
                 return True
             except Exception, e:
                 print 'Fail to search "%s" due to exception: %s' % (self.word, e)
@@ -107,7 +103,7 @@ class ImagesCrawler(object):
         print 'Totally %d images downloaded and %d discarded for "%s"' % (self.num_download, self.num_discard, self.word)
 
     def _download_single_image(self, image_url):
-        file_name = os.path.join(self.subdir, image_url.replace('/', ''))
+        file_name = os.path.join(self.subdir.decode('utf-8'), image_url.replace('/', ''))
         extension = os.path.splitext(file_name)[1]
         if extension == '.gif' or os.path.exists(file_name):
             self.num_discard += 1
