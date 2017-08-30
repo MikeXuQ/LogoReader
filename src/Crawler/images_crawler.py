@@ -14,7 +14,7 @@ class ImagesCrawler(object):
     def search(self, word, max_page_num, files_dir):
         self.word = word
         self.files_dir = files_dir
-        self.subdir = os.path.join(self.files_dir, word.split(' ')[0])
+        self.subdir = os.path.join(self.files_dir, word)
         if not os.path.exists(self.subdir):
             os.makedirs(self.subdir)
         self.max_page_num = max_page_num
@@ -23,7 +23,7 @@ class ImagesCrawler(object):
             self._download_images()
 
     def close(self):
-        self.driver.quit()
+        self.driver.close()
 
     def _get_image_urls(self):
         if self.debug:
