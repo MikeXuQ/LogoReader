@@ -16,7 +16,5 @@ def search(word):
 if __name__ == '__main__':
     brands_crawler = BrandsCrawler()
     to_search = brands_crawler.get_brands(BRANDS_DIR)
-    # pool = Pool(processes=NUM_PROCESSES)
-    # pool.map(search, to_search)
-    for x in to_search:
-        search(x)
+    pool = Pool(processes=NUM_PROCESSES)
+    pool.map(search, to_search)
