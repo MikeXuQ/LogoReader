@@ -29,6 +29,7 @@ class BrandsCrawler(object):
                         # 每个品牌名前加上其类别
                         brands += [category+' '+x.encode('utf-8') for x in \
                             html.xpath('//div[contains(@class, \'s-brand\')]//ul[contains(@class, \'v-fixed\')]//a/@title')]
+                        break
                     except Exception, e:
                         if i == times_to_try-1:
                             print 'Fail to get brands of "%s" due to %s' % (category, e)
