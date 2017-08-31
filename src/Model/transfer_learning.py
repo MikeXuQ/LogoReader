@@ -41,7 +41,7 @@ TEST_PERCENTAGE = 10
 
 
 LEARNING_RATE = 0.01
-STEPS = 4000
+STEPS = 400
 BATCH = 100
 
 MODEL_SAVE_PATH="transfer_learning_model/"
@@ -263,7 +263,7 @@ def main():
                 sess, n_classes, image_lists, BATCH, 'training', jpeg_data_tensor, bottleneck_tensor)
             sess.run(train_step, feed_dict={bottleneck_input: train_bottlenecks, ground_truth_input: train_ground_truth})
 
-            if i % 100 == 0 or i + 1 == STEPS:
+            if i % int(STEPS/100) == 0 or i + 1 == STEPS:
                 validation_bottlenecks, validation_ground_truth = get_random_cached_bottlenecks(
                     sess, n_classes, image_lists, BATCH, 'validation', jpeg_data_tensor, bottleneck_tensor)
                 validation_accuracy = sess.run(evaluation_step, feed_dict={
