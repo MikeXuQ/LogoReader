@@ -4,7 +4,7 @@ from images_crawler import ImagesCrawler
 from brands_crawler import BrandsCrawler
 from multiprocessing import Pool
 
-NUM_SEARCH_PAGES = 30
+NUM_SEARCH_PAGES = 5
 LOGOS_DIR = '../../data/logos'
 BRANDS_DIR = '../../data/brands.txt'
 
@@ -22,6 +22,6 @@ def search(word):
     
 if __name__ == '__main__':
     brands_crawler = BrandsCrawler()
-    to_search = brands_crawler.get_brands(BRANDS_DIR)[:100]
+    to_search = brands_crawler.get_brands(BRANDS_DIR)[:100:5]
     pool = Pool(processes=NUM_PROCESSES)
     pool.map(search, to_search)
