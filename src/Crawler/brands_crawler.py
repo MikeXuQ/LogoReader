@@ -27,11 +27,9 @@ class BrandsCrawler(object):
                         page = requests.get(self.search_url_base + category, timeout=5).content
                         html = etree.HTML(page)
                         # 每个品牌名前加上其类别
-                        # 只抓取一半有图片的品牌
-                        tmp_brands = html.xpath('//div[contains(@class, \'s-brand\')]//ul[contains(@class, \'v-fixed\')]//a[//img]/@title')
-                        factor = 0.5
-                        brands += [category+' '+x.encode('utf-8') for x in \
-                            tmp_brands[:int(len(tmp_brands)*factor)]]
+                        # 只抓取带有图片的品牌
+                        collected_brands = html.xpath('//div[contains(@class, \'s-brand\')]//ul[contains(@class, \'v-fixed\')]//a[.//img]/@title')
+                        brands += [category+' '+x.encode('utf-8') for x in collected_brands]
                         break
                     except Exception, e:
                         if i == times_to_try-1:
