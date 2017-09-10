@@ -44,7 +44,7 @@ LEARNING_RATE = 0.01
 STEPS = 400
 BATCH = 100
 
-MODEL_SAVE_PATH="transfer_learning_model/"
+MODEL_SAVE_PATH="../../data/transfer_learning_model"
 MODEL_NAME="transfer_learning_model"
 
 # #### 3. 把样本中所有的图片列表并按训练、验证、测试数据分开
